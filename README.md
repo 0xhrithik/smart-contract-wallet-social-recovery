@@ -1,10 +1,10 @@
-Building a Smart Contract Wallet on Ethereum with Social Recovery in Solidity and React
+## Building a Smart Contract Wallet on Ethereum with Social Recovery in Solidity and React
 
-Scenario of usage: Recovery of deployed smart contract funds in case of lost private keys or similar lost-control scenario.
+#### Scenario of usage: Recovery of deployed smart contract funds in case of lost private keys or similar lost-control scenario.
 
-Features: Adding and removing friends addresses to grant or revoke privileges for recovering the deployed smart contract.
+#### Features: Adding and removing friends addresses to grant or revoke privileges for recovering the deployed smart contract.
 
-Also: local test net faucet, infura block explorer,blockies icons,...
+#### Also: local test net faucet, infura block explorer,blockies icons,...
 
 ## Faucet tx, add and remove friends address ❌
 ![Capture](https://user-images.githubusercontent.com/40022784/84708669-8d532d00-af7e-11ea-9b06-d038057ff7fb.PNG)
