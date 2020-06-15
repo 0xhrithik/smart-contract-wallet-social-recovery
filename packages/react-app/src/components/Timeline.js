@@ -9,7 +9,7 @@ export default function TimelineDisplay(props) {
   return (
     <Timeline mode="right">
 
-      <Timeline.Item dot={"💾"}>
+      {/* <Timeline.Item dot={"💾"}>
         <Text delete>
           Clone and Install from the <a target="_blank" rel="noopener noreferrer" href="https://github.com/austintgriffith/scaffold-eth">github repo</a>
         </Text>
@@ -95,7 +95,7 @@ export default function TimelineDisplay(props) {
         <Text>
           Read more about <a target="_blank" rel="noopener noreferrer"  href="https://ethereum.org/developers">Ethereum</a>, <a target="_blank" rel="noopener noreferrer" href="https://solidity.readthedocs.io/en/develop/contracts.html">Solidity</a>, and <a target="_blank" rel="noopener noreferrer" href="https://buidler.dev/tutorial">Buidler</a>
         </Text>
-      </Timeline.Item>
+      </Timeline.Item> */}
 
 
 

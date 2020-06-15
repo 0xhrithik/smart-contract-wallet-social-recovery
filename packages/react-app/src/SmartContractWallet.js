@@ -215,7 +215,7 @@ export default function SmartContractWallet(props) {
         )}
       />
       <div style={{position:'fixed',textAlign:'right',right:25,top:90,padding:10,width:"50%"}}>
-        <h1><span role="img" aria-label="checkmark">✅</span> TODO LIST</h1>
+        {/* <h1><span role="img" aria-label="checkmark">✅</span> TODO LIST</h1> */}
         <Timeline
           localProvider={props.localProvider}
           address={props.address}
