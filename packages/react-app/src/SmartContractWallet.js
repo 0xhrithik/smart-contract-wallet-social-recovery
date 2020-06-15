@@ -27,6 +27,13 @@ export default function SmartContractWallet(props) {
   const contractBalance = useBalance(contractAddress,props.localProvider)
   
   const [ friendAddress, setFriendAddress ] = useState("")
+  const [ recoveryAddress, setRecoveryAddress ] = useState("")
+
+  const currentRecoveryAddress = useContractReader(readContracts,contractName,"recoveryAddress",1777);
+  const timeToRecover = useContractReader(readContracts,contractName,"timeToRecover",1777);
+  const localTimestamp = useTimestamp(props.localProvider)
+
+  const isFriend = useContractReader(readContracts,contractName,"friends",[props.address],1777)
 
   const updateFriend = (isFriend)=>{
     return ()=>{
@@ -53,7 +60,72 @@ export default function SmartContractWallet(props) {
         </Col>
       </Row>
     )
+    ownerDisplay.push(
+      <Row align="middle" gutter={4}>
+        <Col span={8} style={{textAlign:"right",opacity:0.333,paddingRight:6,fontSize:24}}>Recovery:</Col>
+        <Col span={10}>
+          <AddressInput
+            value={recoveryAddress}
+            ensProvider={props.ensProvider}
+            onChange={(address)=>{
+              setRecoveryAddress(address)
+            }}
+          />
+        </Col>
+        <Col span={6}>
+          <Button style={{marginLeft:4}} onClick={()=>{
+            tx(writeContracts['SmartContractWallet'].setRecoveryAddress(recoveryAddress))
+            setRecoveryAddress("")
+          }} shape="circle" icon={<CheckCircleOutlined />} />
+                    {timeToRecover&&timeToRecover.toNumber()>0 ? (
+            <Button style={{marginLeft:4}} onClick={()=>{
+              tx( writeContracts['SmartContractWallet'].cancelRecover() )
+            }} shape="circle" icon={<CloseCircleOutlined />}/>
+          ):""}
+          {currentRecoveryAddress && currentRecoveryAddress!="0x0000000000000000000000000000000000000000"?(
+            <span style={{marginLeft:8}}>
+              <Address
+                minimized={true}
+                value={currentRecoveryAddress}
+                ensProvider={props.ensProvider}
+              />
+            </span>
+          ):""}
+        </Col>
+      </Row>
+    )
+  }else if(isFriend){
+  let recoverDisplay = (
+    <Button style={{marginLeft:4}} onClick={()=>{
+      tx( writeContracts['SmartContractWallet'].friendRecover() )
+    }} shape="circle" icon={<SafetyOutlined />}/>
+  )
+  if(localTimestamp&&timeToRecover.toNumber()>0){
+    const secondsLeft = timeToRecover.sub(localTimestamp).toNumber()
+    if(secondsLeft>0){
+      recoverDisplay = (
+        <div>
+          {secondsLeft+"s"}
+        </div>
+      )
+    }else{
+      recoverDisplay = (
+        <Button style={{marginLeft:4}} onClick={()=>{
+          tx( writeContracts['SmartContractWallet'].recover() )
+        }} shape="circle" icon={<RocketOutlined />}/>
+      )
+    }
   }
+  ownerDisplay = (
+    <Row align="middle" gutter={4}>
+      <Col span={8} style={{textAlign:"right",opacity:0.333,paddingRight:6,fontSize:24}}>Recovery:</Col>
+      <Col span={16}>
+        {recoverDisplay}
+      </Col>
+    </Row>
+  )
+}
+  
 
   let cardActions = []
   if(props.address===owner){
